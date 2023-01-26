@@ -1,0 +1,20 @@
+{
+  "template": "https://github.com/PrefectHQ/prefect-collection-template",
+  "commit": "9495ca71f74c279e9d9beff90f1d9f53f77637aa",
+  "checkout": null,
+  "context": {
+    "cookiecutter": {
+      "full_name": "Andrea Giussani & Alessandro Lollo",
+      "email": "alessandro.lollo@gmail.com",
+      "github_organization": "AlessandroLollo",
+      "collection_name": "prefect-huggingface",
+      "collection_slug": "prefect_huggingface",
+      "collection_short_description": "Collections of tasks and flows to interact with Huggingface APIs",
+      "_copy_without_render": [
+        ".github/workflows/*.yml"
+      ],
+      "_template": "https://github.com/PrefectHQ/prefect-collection-template"
+    }
+  },
+  "directory": null
+}
