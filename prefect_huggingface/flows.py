@@ -1,7 +1,7 @@
 """This is an example flows module"""
 from prefect import flow
 
-from prefect_huggingface.blocks import HuggingfaceBlock
+from prefect_huggingface.credentials import HuggingfaceBlock
 from prefect_huggingface.tasks import (
     goodbye_prefect_huggingface,
     hello_prefect_huggingface,
