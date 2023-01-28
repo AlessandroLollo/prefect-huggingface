@@ -2,6 +2,7 @@
 
 from prefect.blocks.core import Block
 from pydantic import Field, SecretStr
+from prefect_huggingface.client import HuggingfaceClient
 
 
 class HuggingfaceCredentials(Block):
@@ -19,4 +20,4 @@ class HuggingfaceCredentials(Block):
         """
         TODO
         """
-        pass
+        return HuggingfaceClient(access_token=self.access_token.get_secret_value())
