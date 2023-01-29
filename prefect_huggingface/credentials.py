@@ -12,7 +12,8 @@ class HuggingfaceCredentials(Block):
     """
 
     _block_type_name = "Huggingface Credentials"
-    _logo_url = "https://todo.todo"  # noqa
+    _logo_url = "https://avatars.githubusercontent.com/u/25720743?s=200&v=4"  # noqa
+    _documentation_url = "https://todo.todo"  # noqa
 
     access_token: SecretStr = Field(
         ...,
