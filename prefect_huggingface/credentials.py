@@ -1,4 +1,4 @@
-"""This is an example blocks module"""
+"""TODO"""
 
 from prefect.blocks.core import Block
 from pydantic import Field, SecretStr
@@ -7,6 +7,9 @@ from prefect_huggingface.client import HuggingfaceClient
 
 
 class HuggingfaceCredentials(Block):
+    """
+    TODO
+    """
 
     _block_type_name = "Huggingface Credentials"
     _logo_url = "https://todo.todo"  # noqa

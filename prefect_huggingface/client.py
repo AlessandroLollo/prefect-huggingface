@@ -1,9 +1,16 @@
+"""TODO"""
+
 import json
-from requests.sessions import Session
 from typing import Dict
+
+from requests.sessions import Session
 
 
 class HuggingfaceClient:
+    """
+    TODO
+    """
+
     def __init__(self, access_token: str) -> None:
         """
         TODO
@@ -42,6 +49,6 @@ class HuggingfaceClient:
 
         with session.post(url=url, data=json.dumps(data)) as response:
             if response.status_code != 200:
-                raise Exception()
+                raise Exception("Error!")
             else:
                 return json.loads(response.content.decode("utf-8"))
