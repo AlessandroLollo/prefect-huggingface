@@ -5,6 +5,8 @@ from typing import Dict, Optional
 
 from requests.sessions import Session
 
+from prefect_huggingface.exceptions import HuggingfaceInferenceAPIFailure
+
 
 class HuggingfaceClient:
     """
@@ -62,6 +64,7 @@ class HuggingfaceClient:
 
         with session.post(url=url, data=json.dumps(data)) as response:
             if response.status_code != 200:
-                raise Exception("Error!")
+                msg = f"There was an error while retrieving result from Huggingface Inference API. Error is: {response.reason}"  # noqa
+                raise HuggingfaceInferenceAPIFailure(msg)
             else:
                 return json.loads(response.content.decode("utf-8"))
