@@ -53,6 +53,13 @@ class HuggingfaceClient:
             inputs (str): The input string to provide to the model.
             options (Optional[Dict]): Options to pass to the API for the given model.
             parameters (Optional[Dict]): Parameters to pass to the API for the given model.
+
+        Returns:
+            The raw response provided by Huggingface Inference API.
+
+        Raises:
+            `HuggingfaceInferenceAPIFailure` if the call to Huggingface Inference API
+                returns an error (status != 200)
         """
         url = self.__get_model_url(model_id=model_id)
         session = self.__get_session()
