@@ -20,7 +20,7 @@ def test_get_inference_result_raises():
 
     c = HuggingfaceClient(access_token=access_token)
 
-    msg_match = "Error!"
+    msg_match = "There was an error while retrieving result from Huggingface Inference API."  # noqa
 
     responses.add(
         method=responses.POST,

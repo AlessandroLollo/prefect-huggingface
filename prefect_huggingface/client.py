@@ -5,6 +5,8 @@ from typing import Dict, Optional
 
 from requests.sessions import Session
 
+from prefect_huggingface.exceptions import HuggingfaceInferenceAPIFailure
+
 
 class HuggingfaceClient:
     """
@@ -51,6 +53,13 @@ class HuggingfaceClient:
             inputs (str): The input string to provide to the model.
             options (Optional[Dict]): Options to pass to the API for the given model.
             parameters (Optional[Dict]): Parameters to pass to the API for the given model.
+
+        Returns:
+            The raw response provided by Huggingface Inference API.
+
+        Raises:
+            `HuggingfaceInferenceAPIFailure` if the call to Huggingface Inference API
+                returns an error (status != 200)
         """
         url = self.__get_model_url(model_id=model_id)
         session = self.__get_session()
@@ -62,6 +71,7 @@ class HuggingfaceClient:
 
         with session.post(url=url, data=json.dumps(data)) as response:
             if response.status_code != 200:
-                raise Exception("Error!")
+                msg = f"There was an error while retrieving result from Huggingface Inference API. Error is: {response.reason}"  # noqa
+                raise HuggingfaceInferenceAPIFailure(msg)
             else:
                 return json.loads(response.content.decode("utf-8"))
