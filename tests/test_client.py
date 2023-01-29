@@ -29,7 +29,9 @@ def test_get_inference_result_raises():
     )
 
     with pytest.raises(Exception, match=msg_match):
-        c.get_inference_result(model_id=model_id, inputs=inputs)
+        c.get_inference_result(
+            model_id=model_id, inputs=inputs, options=None, parameters=None
+        )
 
 
 @responses.activate
@@ -49,7 +51,9 @@ def test_get_inference_result_with_inputs():
         json={"result": "ok"},
     )
 
-    result = c.get_inference_result(model_id=model_id, inputs=inputs)
+    result = c.get_inference_result(
+        model_id=model_id, inputs=inputs, options=None, parameters=None
+    )
 
     assert result == expected_result
 
@@ -72,7 +76,9 @@ def test_get_inference_result_with_inputs_and_options():
         json={"result": "ok"},
     )
 
-    result = c.get_inference_result(model_id=model_id, inputs=inputs, options=options)
+    result = c.get_inference_result(
+        model_id=model_id, inputs=inputs, options=options, parameters=None
+    )
 
     assert result == expected_result
     assert json.loads(responses.calls[0].request.body) == {
@@ -100,7 +106,7 @@ def test_get_inference_result_with_inputs_and_parameters():
     )
 
     result = c.get_inference_result(
-        model_id=model_id, inputs=inputs, parameters=parameters
+        model_id=model_id, inputs=inputs, options=None, parameters=parameters
     )
 
     assert result == expected_result
