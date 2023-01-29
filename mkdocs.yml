@@ -70,6 +70,6 @@ watch:
 
 nav:
     - Home: index.md
-    - Tasks: tasks.md
-    - Flows: flows.md
+    - Client: client.md
+    - Credentials: credentials.md
 
