@@ -1,3 +1,5 @@
+import json
+
 import pytest
 import responses
 
@@ -73,6 +75,10 @@ def test_get_inference_result_with_inputs_and_options():
     result = c.get_inference_result(model_id=model_id, inputs=inputs, options=options)
 
     assert result == expected_result
+    assert json.loads(responses.calls[0].request.body) == {
+        "inputs": inputs,
+        "options": options,
+    }
 
 
 @responses.activate
@@ -98,3 +104,7 @@ def test_get_inference_result_with_inputs_and_parameters():
     )
 
     assert result == expected_result
+    assert json.loads(responses.calls[0].request.body) == {
+        "inputs": inputs,
+        "parameters": parameters,
+    }
