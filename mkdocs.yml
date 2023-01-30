@@ -72,4 +72,5 @@ nav:
     - Home: index.md
     - Client: client.md
     - Credentials: credentials.md
+    - Tasks: tasks.md
 
