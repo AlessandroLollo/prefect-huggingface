@@ -62,6 +62,34 @@ def test_get_inference_result_raises_api_failure():
 
 
 @responses.activate
+def test_get_inference_result_with_endpoint_raises_api_failure():
+    inference_endpoint_url = "https://test.com/model"
+    inputs = "inputs"
+    access_token = "access_token"
+
+    c = HuggingfaceClient(access_token=access_token)
+
+    msg_match = (
+        "There was an error while retrieving result from Huggingface API."  # noqa
+    )
+
+    responses.add(
+        method=responses.POST,
+        url=inference_endpoint_url,
+        status=123,
+    )
+
+    with pytest.raises(HuggingfaceAPIFailure, match=msg_match):
+        c.get_inference_result(
+            inference_endpoint_url=inference_endpoint_url,
+            model_id=None,
+            inputs=inputs,
+            options=None,
+            parameters=None,
+        )
+
+
+@responses.activate
 def test_get_inference_result_with_inputs():
     model_id = "model"
     inputs = "test"
