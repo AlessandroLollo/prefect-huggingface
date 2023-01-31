@@ -4,6 +4,10 @@ import pytest
 import responses
 
 from prefect_huggingface.client import HuggingfaceClient
+from prefect_huggingface.exceptions import (
+    HuggingfaceAPIFailure,
+    HuggingfaceInferenceConfiguration,
+)
 
 
 def test_client_construction():
@@ -12,15 +16,34 @@ def test_client_construction():
     assert c.access_token == access_token
 
 
+def test_get_inference_result_raises_configuration_failure():
+    access_token = "token"
+
+    c = HuggingfaceClient(access_token=access_token)
+
+    msg_match = "Please provide either the Inference Endpoint URL or the model identifier to be used with Inference API."  # noqa
+
+    with pytest.raises(HuggingfaceInferenceConfiguration, match=msg_match):
+        c.get_inference_result(
+            inference_endpoint_url=None,
+            model_id=None,
+            inputs="inputs",
+            options=None,
+            parameters=None,
+        )
+
+
 @responses.activate
-def test_get_inference_result_raises():
+def test_get_inference_result_raises_api_failure():
     model_id = "model"
     inputs = "test"
     access_token = "token"
 
     c = HuggingfaceClient(access_token=access_token)
 
-    msg_match = "There was an error while retrieving result from Huggingface Inference API."  # noqa
+    msg_match = (
+        "There was an error while retrieving result from Huggingface API."  # noqa
+    )
 
     responses.add(
         method=responses.POST,
@@ -28,9 +51,13 @@ def test_get_inference_result_raises():
         status=123,
     )
 
-    with pytest.raises(Exception, match=msg_match):
+    with pytest.raises(HuggingfaceAPIFailure, match=msg_match):
         c.get_inference_result(
-            model_id=model_id, inputs=inputs, options=None, parameters=None
+            inference_endpoint_url=None,
+            model_id=model_id,
+            inputs=inputs,
+            options=None,
+            parameters=None,
         )
 
 
@@ -52,7 +79,11 @@ def test_get_inference_result_with_inputs():
     )
 
     result = c.get_inference_result(
-        model_id=model_id, inputs=inputs, options=None, parameters=None
+        inference_endpoint_url=None,
+        model_id=model_id,
+        inputs=inputs,
+        options=None,
+        parameters=None,
     )
 
     assert result == expected_result
@@ -77,7 +108,11 @@ def test_get_inference_result_with_inputs_and_options():
     )
 
     result = c.get_inference_result(
-        model_id=model_id, inputs=inputs, options=options, parameters=None
+        inference_endpoint_url=None,
+        model_id=model_id,
+        inputs=inputs,
+        options=options,
+        parameters=None,
     )
 
     assert result == expected_result
@@ -106,7 +141,11 @@ def test_get_inference_result_with_inputs_and_parameters():
     )
 
     result = c.get_inference_result(
-        model_id=model_id, inputs=inputs, options=None, parameters=parameters
+        inference_endpoint_url=None,
+        model_id=model_id,
+        inputs=inputs,
+        options=None,
+        parameters=parameters,
     )
 
     assert result == expected_result

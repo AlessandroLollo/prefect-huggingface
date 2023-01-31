@@ -4,7 +4,7 @@ from prefect import flow
 from pydantic import SecretStr
 
 from prefect_huggingface.credentials import HuggingfaceCredentials
-from prefect_huggingface.exceptions import HuggingfaceInferenceAPIFailure
+from prefect_huggingface.exceptions import HuggingfaceAPIFailure
 from prefect_huggingface.tasks import get_inference_result
 
 
@@ -20,6 +20,7 @@ def test_get_inference_result_fails():
     def test_flow():
         return get_inference_result(
             credentials=HuggingfaceCredentials(access_token=SecretStr(access_token)),
+            inference_endpoint_url=None,
             model_id=model_id,
             inputs=inputs,
             options=options,
@@ -32,9 +33,11 @@ def test_get_inference_result_fails():
         status=123,
     )
 
-    msg_match = "There was an error while retrieving result from Huggingface Inference API."  # noqa
+    msg_match = (
+        "There was an error while retrieving result from Huggingface API."  # noqa
+    )
 
-    with pytest.raises(HuggingfaceInferenceAPIFailure, match=msg_match):
+    with pytest.raises(HuggingfaceAPIFailure, match=msg_match):
         test_flow()
 
 
@@ -52,6 +55,7 @@ def test_get_inference_result_succeed():
     def test_flow():
         return get_inference_result(
             credentials=HuggingfaceCredentials(access_token=SecretStr(access_token)),
+            inference_endpoint_url=None,
             model_id=model_id,
             inputs=inputs,
             options=options,
