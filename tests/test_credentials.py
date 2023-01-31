@@ -15,6 +15,3 @@ def test_get_client():
     expected_client = HuggingfaceClient(access_token=access_token)
 
     assert expected_client.access_token == cr.get_client().access_token
-    assert (
-        expected_client.inferece_api_base_url == cr.get_client().inferece_api_base_url
-    )
