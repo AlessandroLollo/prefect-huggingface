@@ -8,8 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 
 ### Added
+Transformer managers and sentiment-analysis pipeline task
 
 ### Changed
+Setup file now is going to manage the torch dependencies
 
 ### Deprecated
 
@@ -19,9 +21,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
-## 0.1.0
+## 0.2.0
 
-Released on ????? ?th, 20??.
+Released on Feb 2nd, 2023.
 
 ### Added
 
