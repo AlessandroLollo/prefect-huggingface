@@ -5,7 +5,9 @@ from typing import Dict, Optional
 from prefect import task
 
 from prefect_huggingface.credentials import HuggingfaceCredentials
+from prefect_huggingface.managers.transformers_manager import ModelManager
 
+from transformers.pipelines import Pipeline
 
 @task
 def get_inference_result(
@@ -45,3 +47,20 @@ def get_inference_result(
         options=options,
         parameters=parameters,
     )
+
+
+@task(name='Load Transformers Pipeline')
+def load_transformers_pipeline(transformer_task: str, device: str) -> Pipeline:
+    """
+        Returns the Transformers pipeline object specific to the specified task
+
+        Args:
+            transformer_task (str): The task the user wants to perform.
+            device (int): the device where we want to run the inference - either CPU or GPU.
+            Users can specify device argument as a str, “cpu” or "cuda" device.
+
+        Returns:
+            The HF transformer model
+
+    """
+    return ModelManager.get_model(transformer_task=transformer_task, device=device)
