@@ -106,3 +106,28 @@ pip install -e ".[dev]"
 pre-commit install
 ```
 8. `git commit`, `git push`, and create a pull request
+
+
+### How to use the Transformers Managers
+To create a `sentiment-analysis` prefect flow, you just need to add to your code the following snippet
+
+```python
+from prefect_huggingface.settings import SENTIMENT_ANALYSIS_TASK
+from prefect_huggingface.managers.transformers_manager import ModelManager
+from prefect import Flow
+from prefect import task
+
+@task
+def load_sentiment_analysis_pipeline(device=):
+    return ModelManager.get_model(transformer_task=SENTIMENT_ANALYSIS_TASK, device=device)
+
+@task
+def get_predictions(a_transformer_model):
+    return a_transformer_model.get_sentiment(
+        ['i love this', 'i enjoyed the view', 'ale lollo is very cool', 'the food is bad']
+    )
+
+with Flow() as f:
+    model = load_sentiment_analysis_pipeline(transformer_task=SENTIMENT_ANALYSIS_TASK, device='cpu')
+    output_preds = get_predictions(model)
+```

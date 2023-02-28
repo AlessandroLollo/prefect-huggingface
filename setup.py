@@ -1,5 +1,9 @@
 from setuptools import find_packages, setup
 
+pytorch = [
+    'torch==1.13.1',
+]
+
 import versioneer
 
 with open("requirements.txt") as install_requires_file:
@@ -26,7 +30,10 @@ setup(
     packages=find_packages(exclude=("tests", "docs")),
     python_requires=">=3.7",
     install_requires=install_requires,
-    extras_require={"dev": dev_requires},
+    extras_require={
+        "dev": dev_requires,
+        "torch": pytorch,
+    },
     entry_points={
         "prefect.collections": [
             "prefect_huggingface = prefect_huggingface",
